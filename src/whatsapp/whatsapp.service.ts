@@ -13,9 +13,9 @@ export class WhatsappService {
     console.log(createWhatsappDto)
     try {
       const accountSid = this.configService.get<string>('accountSid')
-      /* const accountSid = 'ACf760410b1d458c6c29078d12b9c7c826' */
+
       const authToken = this.configService.get<string>('authToken')
-      /* const authToken = '5db68bf92b3258d5bb4d194a077c07c8' */
+
       const client = twilio(accountSid, authToken);
 
       const responseSendWhatsapp = await client.messages
