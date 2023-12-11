@@ -10,11 +10,12 @@ export class WhatsappService {
   constructor(private configService: ConfigService) { }
 
   async sendWhatsapp(createWhatsappDto: CreateWhatsappDto): Promise<IResponseSendWhatsapp> {
-    console.log(createWhatsappDto)
+
     try {
       const accountSid = this.configService.get<string>('accountSid')
-
       const authToken = this.configService.get<string>('authToken')
+      const phoneSendWhatsapp = this.configService.get<string>('phoneSendWhatsapp')
+
 
       const client = twilio(accountSid, authToken);
 
@@ -22,7 +23,7 @@ export class WhatsappService {
         .create({
           body: `${createWhatsappDto.message}`,
           from: 'whatsapp:+14155238886',
-          to: `whatsapp:+521${createWhatsappDto.phone}`
+          to: `whatsapp:+521${phoneSendWhatsapp}`
         })
 
       return {
@@ -30,7 +31,6 @@ export class WhatsappService {
         data: responseSendWhatsapp
       }
     } catch (error) {
-      console.log(error)
       return {
         status: false,
         error
